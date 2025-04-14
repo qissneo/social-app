@@ -1,6 +1,6 @@
 import React from 'react'
-import {Image as RNImage} from 'react-native-image-crop-picker'
-import {AppBskyActorDefs, AppBskyGraphDefs} from '@atproto/api'
+import {type Image as RNImage} from 'react-native-image-crop-picker'
+import {type AppBskyActorDefs, type AppBskyGraphDefs} from '@atproto/api'
 
 import {useNonReactiveCallback} from '#/lib/hooks/useNonReactiveCallback'
 
@@ -85,11 +85,6 @@ export interface LinkWarningModal {
   share?: boolean
 }
 
-export interface InAppBrowserConsentModal {
-  name: 'in-app-browser-consent'
-  href: string
-}
-
 export type Modal =
   // Account
   | DeleteAccountModal
@@ -118,7 +113,6 @@ export type Modal =
 
   // Generic
   | LinkWarningModal
-  | InAppBrowserConsentModal
 
 const ModalContext = React.createContext<{
   isModalActive: boolean
