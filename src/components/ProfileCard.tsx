@@ -29,14 +29,14 @@ import {PlusLarge_Stroke2_Corner0_Rounded as Plus} from '#/components/icons/Plus
 import {Link as InternalLink, type LinkProps} from '#/components/Link'
 import {RichText} from '#/components/RichText'
 import {Text} from '#/components/Typography'
-import type * as bsky from '#/types/bsky'
+import type * as bee from '#/types/bee'
 
 export function Default({
   profile,
   moderationOpts,
   logContext = 'ProfileCard',
 }: {
-  profile: bsky.profile.AnyProfileView
+  profile: bee.profile.AnyProfileView
   moderationOpts: ModerationOpts
   logContext?: 'ProfileCard' | 'StarterPackProfilesList'
 }) {
@@ -106,7 +106,7 @@ export function Link({
   style,
   ...rest
 }: {
-  profile: bsky.profile.AnyProfileView
+  profile: bee.profile.AnyProfileView
 } & Omit<LinkProps, 'to' | 'label'>) {
   const {_} = useLingui()
   return (
@@ -131,7 +131,7 @@ export function Avatar({
   profile,
   moderationOpts,
 }: {
-  profile: bsky.profile.AnyProfileView
+  profile: bee.profile.AnyProfileView
   moderationOpts: ModerationOpts
 }) {
   const moderation = moderateProfile(profile, moderationOpts)
@@ -166,7 +166,7 @@ export function NameAndHandle({
   profile,
   moderationOpts,
 }: {
-  profile: bsky.profile.AnyProfileView
+  profile: bee.profile.AnyProfileView
   moderationOpts: ModerationOpts
 }) {
   const t = useTheme()
@@ -229,7 +229,7 @@ export function Description({
   profile: profileUnshadowed,
   numberOfLines = 3,
 }: {
-  profile: bsky.profile.AnyProfileView
+  profile: bee.profile.AnyProfileView
   numberOfLines?: number
 }) {
   const profile = useProfileShadow(profileUnshadowed)
@@ -285,7 +285,7 @@ export function DescriptionPlaceholder({
 }
 
 export type FollowButtonProps = {
-  profile: bsky.profile.AnyProfileView
+  profile: bee.profile.AnyProfileView
   moderationOpts: ModerationOpts
   logContext: LogEvents['profile:follow']['logContext'] &
     LogEvents['profile:unfollow']['logContext']

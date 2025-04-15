@@ -214,7 +214,7 @@ export function useTopic(raw: TrendingTopic): ParsedTrendingTopic {
             url: makeProfileLink({did: urip.host, handle: urip.host}),
           }
         }
-        case 'app.bsky.feed.generator': {
+        case 'app.bee.feed.generator': {
           return {
             type: 'feed',
             label: _(msg`Browse the ${displayName} feed`),

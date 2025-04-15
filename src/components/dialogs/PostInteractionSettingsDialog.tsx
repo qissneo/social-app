@@ -1,6 +1,6 @@
 import React from 'react'
 import {StyleProp, View, ViewStyle} from 'react-native'
-import {AppBskyFeedDefs, AppBskyFeedPostgate, AtUri} from '@atproto/api'
+import {AppBeeFeedDefs, AppBeeFeedPostgate, AtUri} from '@atproto/api'
 import {msg, Trans} from '@lingui/macro'
 import {useLingui} from '@lingui/react'
 import {useQueryClient} from '@tanstack/react-query'
@@ -120,10 +120,10 @@ export type PostInteractionSettingsDialogProps = {
    */
   rootPostUri: string
   /**
-   * Optional initial {@link AppBskyFeedDefs.ThreadgateView} to use if we
+   * Optional initial {@link AppBeeFeedDefs.ThreadgateView} to use if we
    * happen to have one before opening the settings dialog.
    */
-  initialThreadgateView?: AppBskyFeedDefs.ThreadgateView
+  initialThreadgateView?: AppBeeFeedDefs.ThreadgateView
 }
 
 export function PostInteractionSettingsDialog(
@@ -154,7 +154,7 @@ export function PostInteractionSettingsDialogControlledInner(
   const {mutateAsync: setThreadgateAllow} = useSetThreadgateAllowMutation()
 
   const [editedPostgate, setEditedPostgate] =
-    React.useState<AppBskyFeedPostgate.Record>()
+    React.useState<AppBeeFeedPostgate.Record>()
   const [editedAllowUISettings, setEditedAllowUISettings] =
     React.useState<ThreadgateAllowUISetting[]>()
 
