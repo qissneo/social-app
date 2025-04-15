@@ -20,10 +20,10 @@ module.exports = function (config) {
   const IS_DEV = !IS_TESTFLIGHT || !IS_PRODUCTION
 
   const ASSOCIATED_DOMAINS = [
-    'applinks:bsky.app',
-    'applinks:staging.bsky.app',
-    'appclips:bsky.app',
-    'appclips:go.bsky.app', // Allows App Clip to work when scanning QR codes
+    'applinks:bee.app',
+    'applinks:staging.bee.app',
+    'appclips:bee.app',
+    'appclips:go.bee.app', // Allows App Clip to work when scanning QR codes
     // When testing local services, enter an ngrok (et al) domain here. It must use a standard HTTP/HTTPS port.
     ...(IS_DEV || IS_TESTFLIGHT ? [] : []),
   ]
@@ -40,10 +40,10 @@ module.exports = function (config) {
   return {
     expo: {
       version: VERSION,
-      name: 'Bluesky',
-      slug: 'bluesky',
-      scheme: 'bluesky',
-      owner: 'blueskysocial',
+      name: 'Bee',
+      slug: 'bee',
+      scheme: 'bee',
+      owner: 'beeentativa',
       runtimeVersion: {
         policy: 'appVersion',
       },
@@ -52,7 +52,7 @@ module.exports = function (config) {
       primaryColor: '#1083fe',
       ios: {
         supportsTablet: false,
-        bundleIdentifier: 'xyz.blueskyweb.app',
+        bundleIdentifier: 'xyz.beeweb.app',
         config: {
           usesNonExemptEncryption: false,
         },
@@ -66,7 +66,7 @@ module.exports = function (config) {
             'Used to save images to your library.',
           NSPhotoLibraryUsageDescription:
             'Used for profile pictures, posts, and other kinds of content',
-          CFBundleSpokenName: 'Blue Sky',
+          CFBundleSpokenName: 'Bee',
           CFBundleLocalizations: [
             'en',
             'an',
@@ -112,7 +112,7 @@ module.exports = function (config) {
         entitlements: {
           'com.apple.developer.kernel.increased-memory-limit': true,
           'com.apple.developer.kernel.extended-virtual-addressing': true,
-          'com.apple.security.application-groups': 'group.app.bsky',
+          'com.apple.security.application-groups': 'group.app.bee',
         },
         privacyManifests: {
           NSPrivacyAccessedAPITypes: [
@@ -164,7 +164,7 @@ module.exports = function (config) {
             data: [
               {
                 scheme: 'https',
-                host: 'bsky.app',
+                host: 'bee.app',
               },
               IS_DEV && {
                 scheme: 'http',
@@ -200,7 +200,7 @@ module.exports = function (config) {
         USE_SENTRY && [
           '@sentry/react-native/expo',
           {
-            organization: 'blueskyweb',
+            organization: 'beeweb',
             project: 'app',
             url: 'https://sentry.io',
           },
@@ -375,26 +375,26 @@ module.exports = function (config) {
               ios: {
                 appExtensions: [
                   {
-                    targetName: 'Share-with-Bluesky',
-                    bundleIdentifier: 'xyz.blueskyweb.app.Share-with-Bluesky',
+                    targetName: 'Share-with-Bee',
+                    bundleIdentifier: 'xyz.beeweb.app.Share-with-Bee',
                     entitlements: {
                       'com.apple.security.application-groups': [
-                        'group.app.bsky',
+                        'group.app.bee',
                       ],
                     },
                   },
                   {
-                    targetName: 'BlueskyNSE',
-                    bundleIdentifier: 'xyz.blueskyweb.app.BlueskyNSE',
+                    targetName: 'BeeNSE',
+                    bundleIdentifier: 'xyz.beeweb.app.BeeNSE',
                     entitlements: {
                       'com.apple.security.application-groups': [
-                        'group.app.bsky',
+                        'group.app.bee',
                       ],
                     },
                   },
                   {
-                    targetName: 'BlueskyClip',
-                    bundleIdentifier: 'xyz.blueskyweb.app.AppClip',
+                    targetName: 'BeeClip',
+                    bundleIdentifier: 'xyz.beeweb.app.AppClip',
                   },
                 ],
               },
