@@ -1,8 +1,8 @@
 import React from 'react'
 import {type GestureResponderEvent, View} from 'react-native'
 import {
-  type AppBskyFeedDefs,
-  type AppBskyGraphDefs,
+  type AppBeeFeedDefs,
+  type AppBeeGraphDefs,
   AtUri,
   RichText as RichTextApi,
 } from '@atproto/api'
@@ -35,11 +35,11 @@ import {Loader} from '#/components/Loader'
 import * as Prompt from '#/components/Prompt'
 import {RichText, type RichTextProps} from '#/components/RichText'
 import {Text} from '#/components/Typography'
-import type * as bsky from '#/types/bsky'
+import type * as bee from '#/types/bee'
 import {Trash_Stroke2_Corner0_Rounded as TrashIcon} from './icons/Trash'
 
 type Props = {
-  view: AppBskyFeedDefs.GeneratorView
+  view: AppBeeFeedDefs.GeneratorView
 }
 
 export function Default(props: Props) {
@@ -120,7 +120,7 @@ export function TitleAndByline({
   creator,
 }: {
   title: string
-  creator?: bsky.profile.AnyProfileView
+  creator?: bee.profile.AnyProfileView
 }) {
   const t = useTheme()
 
@@ -227,7 +227,7 @@ export function SaveButton({
   pin,
   ...props
 }: {
-  view: AppBskyFeedDefs.GeneratorView | AppBskyGraphDefs.ListView
+  view: AppBeeFeedDefs.GeneratorView | AppBeeGraphDefs.ListView
   pin?: boolean
   text?: boolean
 } & Partial<ButtonProps>) {
@@ -242,7 +242,7 @@ function SaveButtonInner({
   text = true,
   ...buttonProps
 }: {
-  view: AppBskyFeedDefs.GeneratorView | AppBskyGraphDefs.ListView
+  view: AppBeeFeedDefs.GeneratorView | AppBeeGraphDefs.ListView
   pin?: boolean
   text?: boolean
 } & Partial<ButtonProps>) {
@@ -254,7 +254,7 @@ function SaveButtonInner({
     useRemoveFeedMutation()
 
   const uri = view.uri
-  const type = view.uri.includes('app.bsky.feed.generator') ? 'feed' : 'list'
+  const type = view.uri.includes('app.bee.feed.generator') ? 'feed' : 'list'
 
   const savedFeedConfig = React.useMemo(() => {
     return preferences?.savedFeeds?.find(feed => feed.value === uri)
@@ -350,7 +350,7 @@ function SaveButtonInner({
 export function createProfileFeedHref({
   feed,
 }: {
-  feed: AppBskyFeedDefs.GeneratorView
+  feed: AppBeeFeedDefs.GeneratorView
 }) {
   const urip = new AtUri(feed.uri)
   const handleOrDid = feed.creator.handle || feed.creator.did
