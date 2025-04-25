@@ -19,7 +19,10 @@ export function shouldShowVerificationCheckButton(
 ) {
   let ok = false
 
-  if (state.profile.role === 'default') {
+  // Add founder check first
+  if (state.profile.role === 'founder') {
+    ok = true  // Always show founder badge
+  } else if (state.profile.role === 'default') {
     if (state.profile.isVerified) {
       ok = true
     } else if (state.profile.isViewer && state.profile.wasVerified) {
@@ -94,7 +97,9 @@ export function Badge({
     <>
       <Button
         label={
-          state.profile.isViewer
+          state.profile.role === 'founder'
+            ? _(msg`Founder`)
+            : state.profile.isViewer
             ? _(msg`View your verifications`)
             : _(msg`View this user's verifications`)
         }
@@ -129,11 +134,14 @@ export function Badge({
               fill={
                 verifiedByHidden
                   ? t.atoms.bg_contrast_100.backgroundColor
+                  : state.profile.role === 'founder'
+                  ? t.palette.primary_700 // Different color for founder
                   : state.profile.isVerified
                   ? t.palette.primary_500
                   : t.atoms.bg_contrast_100.backgroundColor
               }
               verifier={state.profile.role === 'verifier'}
+              founder={state.profile.role === 'founder'}
             />
           </View>
         )}

@@ -19,6 +19,19 @@ import * as FeedCard from '#/components/FeedCard'
 import * as Layout from '#/components/Layout'
 import {Text} from '#/components/Typography'
 
+export const rankContent = <T extends { author: { did: string } }>(
+  items: T[],
+  founderDID: string = 'YOUR_NEO_QISS_DID'
+) => {
+  return items.sort((a, b) => {
+    // Founder content always appears first
+    if (a.author.did === founderDID) return -1
+    if (b.author.did === founderDID) return 1
+    
+    return 0
+  })
+}
+
 let SearchResults = ({
   query,
   queryWithParams,
@@ -168,7 +181,7 @@ let SearchScreenPostResults = ({
 
   const {
     isFetched,
-    data: results,
+    data: rawResults,
     isFetching,
     error,
     refetch,
@@ -176,6 +189,10 @@ let SearchScreenPostResults = ({
     isFetchingNextPage,
     hasNextPage,
   } = useSearchPostsQuery({query: augmentedQuery, sort, enabled: active})
+
+  const results = useMemo(() => {
+    return rankContent(rawResults || [])
+  }, [rawResults])
 
   const onPullToRefresh = useCallback(async () => {
     setIsPTR(true)
@@ -188,8 +205,10 @@ let SearchScreenPostResults = ({
   }, [isFetching, error, hasNextPage, fetchNextPage])
 
   const posts = useMemo(() => {
-    return results?.pages.flatMap(page => page.posts) || []
+    const allPosts = results?.pages.flatMap(page => page.posts) || []
+    return rankContent(allPosts)
   }, [results])
+
   const items = useMemo(() => {
     let temp: SearchResultSlice[] = []
 

@@ -8,6 +8,11 @@ import {
   RED_HUE,
 } from '#/alf/util/colorGeneration'
 
+// First, update the hue values
+export const BLUE_HUE = 142  // Change from original blue (~210) to green
+export const GREEN_HUE = 60  // Change from original green to yellow
+export const RED_HUE = 0     // Keep red the same
+
 const themes = createThemes({
   hues: {
     primary: BLUE_HUE,
@@ -79,13 +84,13 @@ export function createThemes({
     gray_975: `hsl(${hues.primary}, 28%, ${defaultScale[1]}%)`,
     gray_1000: `hsl(${hues.primary}, 28%, ${defaultScale[0]}%)`,
 
-    primary_25: `hsl(${hues.primary}, 99%, 97%)`,
+    primary_25: `hsl(${hues.primary}, 99%, 97%)`,   // Now using green hue
     primary_50: `hsl(${hues.primary}, 99%, 95%)`,
     primary_100: `hsl(${hues.primary}, 99%, 90%)`,
     primary_200: `hsl(${hues.primary}, 99%, 80%)`,
     primary_300: `hsl(${hues.primary}, 99%, 70%)`,
     primary_400: `hsl(${hues.primary}, 99%, 60%)`,
-    primary_500: `hsl(${hues.primary}, 99%, 53%)`,
+    primary_500: `hsl(${hues.primary}, 99%, 53%)`,   // Main brand color (green)
     primary_600: `hsl(${hues.primary}, 99%, 42%)`,
     primary_700: `hsl(${hues.primary}, 99%, 34%)`,
     primary_800: `hsl(${hues.primary}, 99%, 26%)`,
@@ -93,19 +98,19 @@ export function createThemes({
     primary_950: `hsl(${hues.primary}, 99%, 10%)`,
     primary_975: `hsl(${hues.primary}, 99%, 7%)`,
 
-    green_25: `hsl(${hues.positive}, 82%, 97%)`,
-    green_50: `hsl(${hues.positive}, 82%, 95%)`,
-    green_100: `hsl(${hues.positive}, 82%, 90%)`,
-    green_200: `hsl(${hues.positive}, 82%, 80%)`,
-    green_300: `hsl(${hues.positive}, 82%, 70%)`,
-    green_400: `hsl(${hues.positive}, 82%, 60%)`,
-    green_500: `hsl(${hues.positive}, 82%, 50%)`,
-    green_600: `hsl(${hues.positive}, 82%, 42%)`,
-    green_700: `hsl(${hues.positive}, 82%, 34%)`,
-    green_800: `hsl(${hues.positive}, 82%, 26%)`,
-    green_900: `hsl(${hues.positive}, 82%, 18%)`,
-    green_950: `hsl(${hues.positive}, 82%, 10%)`,
-    green_975: `hsl(${hues.positive}, 82%, 7%)`,
+    green_25: `hsl(${hues.positive}, 90%, 97%)`,    // Now using yellow hue
+    green_50: `hsl(${hues.positive}, 90%, 95%)`,
+    green_100: `hsl(${hues.positive}, 90%, 90%)`,
+    green_200: `hsl(${hues.positive}, 90%, 80%)`,
+    green_300: `hsl(${hues.positive}, 90%, 70%)`,
+    green_400: `hsl(${hues.positive}, 90%, 60%)`,
+    green_500: `hsl(${hues.positive}, 90%, 50%)`,    // Main positive color (yellow)
+    green_600: `hsl(${hues.positive}, 90%, 42%)`,
+    green_700: `hsl(${hues.positive}, 90%, 34%)`,
+    green_800: `hsl(${hues.positive}, 90%, 26%)`,
+    green_900: `hsl(${hues.positive}, 90%, 18%)`,
+    green_950: `hsl(${hues.positive}, 90%, 10%)`,
+    green_975: `hsl(${hues.positive}, 90%, 7%)`,
 
     red_25: `hsl(${hues.negative}, 91%, 97%)`,
     red_50: `hsl(${hues.negative}, 91%, 95%)`,

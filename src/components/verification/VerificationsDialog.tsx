@@ -59,18 +59,19 @@ function Inner({
   const {gtMobile} = useBreakpoints()
 
   const userName = getUserDisplayName(profile)
+  const isFounder = profile.did === 'YOUR_NEO_QISS_DID' // Replace with your DID
+  
   const label = state.profile.isViewer
-    ? state.profile.isVerified
+    ? isFounder
+      ? _(msg`You are Pika's founder`)
+      : state.profile.isVerified
       ? _(msg`You are verified`)
       : _(msg`Your verifications`)
+    : isFounder
+    ? _(msg`${userName} is Pika's founder`)
     : state.profile.isVerified
     ? _(msg`${userName} is verified`)
-    : _(
-        msg({
-          message: `${userName}'s verifications`,
-          comment: `Possessive, meaning "the verifications of {userName}"`,
-        }),
-      )
+    : _(msg`${userName}'s verifications`)
 
   return (
     <Dialog.ScrollableInner
@@ -83,7 +84,11 @@ function Inner({
           {label}
         </Text>
         <Text style={[a.text_md, a.leading_snug]}>
-          {state.profile.isVerified ? (
+          {isFounder ? (
+            <Trans>
+              This account belongs to Neo Qiss, the founder of Pika.
+            </Trans>
+          ) : state.profile.isVerified ? (
             <Trans>
               This account has a checkmark because it's been verified by trusted
               sources.

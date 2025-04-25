@@ -7,7 +7,7 @@ import type * as bsky from '#/types/bsky'
 
 export type FullVerificationState = {
   profile: {
-    role: 'default' | 'verifier'
+    role: 'default' | 'verifier' | 'founder'  // Added founder
     isVerified: boolean
     wasVerified: boolean
     isViewer: boolean
@@ -15,7 +15,7 @@ export type FullVerificationState = {
   }
   viewer:
     | {
-        role: 'default'
+        role: 'default' | 'founder'  // Added founder
         isVerified: boolean
       }
     | {
@@ -65,15 +65,16 @@ export function useFullVerificationState({
               hasIssuedVerification,
             }
           : {
-              role: 'default',
+              role: viewerState.role, // Adjusted to include 'founder'
               isVerified: viewerState.isVerified,
             },
     }
   }, [profile, currentAccount, profileState, viewerState])
 }
 
+// Update the role types
 export type SimpleVerificationState = {
-  role: 'default' | 'verifier'
+  role: 'default' | 'verifier' | 'founder'  // Added founder
   isVerified: boolean
   showBadge: boolean
 }
@@ -94,6 +95,16 @@ export function useSimpleVerificationState({
         role: 'default',
         isVerified: false,
         showBadge: false,
+      }
+    }
+
+    // Add founder check
+    const isFounder = profile.did === 'YOUR_NEOQISS_DID' // Replace with your actual DID
+    if (isFounder) {
+      return {
+        role: 'founder',
+        isVerified: true,
+        showBadge: true,
       }
     }
 

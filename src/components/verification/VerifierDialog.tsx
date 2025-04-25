@@ -11,6 +11,7 @@ import {atoms as a, useBreakpoints, useTheme} from '#/alf'
 import {Button, ButtonText} from '#/components/Button'
 import * as Dialog from '#/components/Dialog'
 import {VerifierCheck} from '#/components/icons/VerifierCheck'
+import {FounderCheck} from '#/components/icons/FounderCheck'
 import {Link} from '#/components/Link'
 import {Text} from '#/components/Typography'
 import {type FullVerificationState} from '#/components/verification'
@@ -43,6 +44,7 @@ export function VerifierDialog({
 function Inner({
   profile,
   control,
+  verificationState,
 }: {
   control: Dialog.DialogControlProps
   profile: bsky.profile.AnyProfileView
@@ -54,8 +56,14 @@ function Inner({
   const {currentAccount} = useSession()
 
   const isSelf = profile.did === currentAccount?.did
+  const isFounder = profile.did === 'YOUR_NEO_QISS_DID' // Replace with your DID
   const userName = getUserDisplayName(profile)
-  const label = isSelf
+
+  const label = isFounder
+    ? isSelf
+      ? _(msg`You are Pika's founder`)
+      : _(msg`${userName} is Pika's founder`)
+    : isSelf
     ? _(msg`You are a trusted verifier`)
     : _(msg`${userName} is a trusted verifier`)
 
@@ -66,43 +74,63 @@ function Inner({
         gtMobile ? {width: 'auto', maxWidth: 400, minWidth: 200} : a.w_full,
       ]}>
       <View style={[a.gap_lg]}>
-        <View
-          style={[
-            a.w_full,
-            a.rounded_md,
-            a.overflow_hidden,
-            t.atoms.bg_contrast_25,
-            {minHeight: 100},
-          ]}>
-          <Image
-            accessibilityIgnoresInvertColors
-            source={require('../../../assets/images/initial_verification_announcement_1.png')}
-            style={[
-              {
-                aspectRatio: 353 / 160,
-              },
-            ]}
-            alt={_(
-              msg`An illustration showing that Bluesky selects trusted verifiers, and trusted verifiers in turn verify individual user accounts.`,
-            )}
-          />
-        </View>
+        {isFounder ? (
+          <View style={[a.gap_sm]}>
+            <Text style={[a.text_2xl, a.font_bold, a.pr_4xl, a.leading_tight]}>
+              {label}
+            </Text>
+            <Text style={[a.text_md, a.leading_snug]}>
+              <Trans>
+                Accounts with the founder badge{' '}
+                <RNText>
+                  <FounderCheck width={14} />
+                </RNText>{' '}
+                are part of Pika's founding team. This badge is exclusive to Neo Qiss.
+              </Trans>
+            </Text>
+          </View>
+        ) : (
+          <>
+            <View
+              style={[
+                a.w_full,
+                a.rounded_md,
+                a.overflow_hidden,
+                t.atoms.bg_contrast_25,
+                {minHeight: 100},
+              ]}>
+              <Image
+                accessibilityIgnoresInvertColors
+                source={require('../../../assets/images/initial_verification_announcement_1.png')}
+                style={[
+                  {
+                    aspectRatio: 353 / 160,
+                  },
+                ]}
+                alt={_(
+                  msg`An illustration showing that Bluesky selects trusted verifiers, and trusted verifiers in turn verify individual user accounts.`,
+                )}
+              />
+            </View>
 
-        <View style={[a.gap_sm]}>
-          <Text style={[a.text_2xl, a.font_bold, a.pr_4xl, a.leading_tight]}>
-            {label}
-          </Text>
-          <Text style={[a.text_md, a.leading_snug]}>
-            <Trans>
-              Accounts with a scalloped blue check mark{' '}
-              <RNText>
-                <VerifierCheck width={14} />
-              </RNText>{' '}
-              can verify others. These trusted verifiers are selected by
-              Bluesky.
-            </Trans>
-          </Text>
-        </View>
+            <View style={[a.gap_sm]}>
+              <Text
+                style={[a.text_2xl, a.font_bold, a.pr_4xl, a.leading_tight]}>
+                {label}
+              </Text>
+              <Text style={[a.text_md, a.leading_snug]}>
+                <Trans>
+                  Accounts with a scalloped blue check mark{' '}
+                  <RNText>
+                    <VerifierCheck width={14} />
+                  </RNText>{' '}
+                  can verify others. These trusted verifiers are selected by
+                  Bluesky.
+                </Trans>
+              </Text>
+            </View>
+          </>
+        )}
 
         <View
           style={[

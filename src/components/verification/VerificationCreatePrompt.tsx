@@ -13,6 +13,7 @@ import {Button, ButtonIcon, ButtonText} from '#/components/Button'
 import {type DialogControlProps} from '#/components/Dialog'
 import * as Dialog from '#/components/Dialog'
 import {VerifiedCheck} from '#/components/icons/VerifiedCheck'
+import {FounderCheck} from '#/components/icons/FounderCheck'
 import {Loader} from '#/components/Loader'
 import * as ProfileCard from '#/components/ProfileCard'
 import * as Prompt from '#/components/Prompt'
@@ -21,9 +22,11 @@ import type * as bsky from '#/types/bsky'
 export function VerificationCreatePrompt({
   control,
   profile,
+  isFounder = false,
 }: {
   control: DialogControlProps
   profile: bsky.profile.AnyProfileView
+  isFounder?: boolean
 }) {
   const {_} = useLingui()
   const {gtMobile} = useBreakpoints()
@@ -32,8 +35,16 @@ export function VerificationCreatePrompt({
   const [error, setError] = useState(``)
   const onConfirm = useCallback(async () => {
     try {
-      await create({profile})
-      Toast.show(_(msg`Successfully verified`))
+      if (isFounder) {
+        await create({
+          profile,
+          role: 'founder',
+        })
+        Toast.show(_(msg`Successfully set as founder`))
+      } else {
+        await create({profile})
+        Toast.show(_(msg`Successfully verified`))
+      }
       control.close()
     } catch (e) {
       setError(_(msg`Verification failed, please try again.`))
@@ -41,14 +52,20 @@ export function VerificationCreatePrompt({
         safeMessage: e,
       })
     }
-  }, [_, profile, create, control])
+  }, [_, profile, create, control, isFounder])
 
   return (
     <Prompt.Outer control={control}>
       <View style={[a.flex_row, a.align_center, a.gap_sm, a.pb_sm]}>
-        <VerifiedCheck width={18} />
+        {isFounder ? (
+          <FounderCheck width={18} />
+        ) : (
+          <VerifiedCheck width={18} />
+        )}
         <Prompt.TitleText style={[a.pb_0]}>
-          {_(msg`Verify this account?`)}
+          {isFounder 
+            ? _(msg`Set as founder?`)
+            : _(msg`Verify this account?`)}
         </Prompt.TitleText>
       </View>
       <Prompt.DescriptionText>
@@ -81,9 +98,11 @@ export function VerificationCreatePrompt({
               variant="solid"
               color="primary"
               size={gtMobile ? 'small' : 'large'}
-              label={_(msg`Verify account`)}
+              label={isFounder ? _(msg`Set as founder`) : _(msg`Verify account`)}
               onPress={onConfirm}>
-              <ButtonText>{_(msg`Verify account`)}</ButtonText>
+              <ButtonText>
+                {isFounder ? _(msg`Set as founder`) : _(msg`Verify account`)}
+              </ButtonText>
               {isPending && <ButtonIcon icon={Loader} />}
             </Button>
             <Prompt.Cancel />
