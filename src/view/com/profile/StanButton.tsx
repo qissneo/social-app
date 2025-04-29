@@ -4,6 +4,7 @@ import {useLingui} from '@lingui/react'
 
 import {Shadow} from '#/state/cache/types'
 import {useProfileFollowMutationQueue} from '#/state/queries/profile'
+import {useProfileStanMutationQueue} from '#/state/queries/profile'
 import * as bsky from '#/types/bsky'
 import {Button, ButtonType} from '../util/forms/Button'
 import * as Toast from '../util/Toast'
@@ -99,7 +100,7 @@ export function StanButton({
   logContext: 'ProfileCard' | 'StarterPackProfilesList'
   onStan?: () => void
 }) {
-  const [queueStan, queueUnstan] = useProfileFollowMutationQueue(
+  const [queueStan, queueUnstan] = useProfileStanMutationQueue(
     profile,
     logContext,
   )
@@ -130,7 +131,7 @@ export function StanButton({
     return <View />
   }
 
-  if (profile.viewer.following) {
+  if (profile.viewer.stanning) {
     return (
       <Button
         type={stannedType}
@@ -139,7 +140,7 @@ export function StanButton({
         label={_(msg({message: 'Unstan', context: 'action'}))}
       />
     )
-  } else if (!profile.viewer.followedBy) {
+  } else if (!profile.viewer.stannedBy) {
     return (
       <Button
         type={unstannedType}
