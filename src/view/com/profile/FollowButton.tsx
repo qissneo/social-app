@@ -83,3 +83,79 @@ export function FollowButton({
     )
   }
 }
+
+export function StanButton({
+  unstannedType = 'inverted',
+  stannedType = 'default',
+  profile,
+  labelStyle,
+  logContext,
+  onStan,
+}: {
+  unstannedType?: ButtonType
+  stannedType?: ButtonType
+  profile: Shadow<bsky.profile.AnyProfileView>
+  labelStyle?: StyleProp<TextStyle>
+  logContext: 'ProfileCard' | 'StarterPackProfilesList'
+  onStan?: () => void
+}) {
+  const [queueStan, queueUnstan] = useProfileFollowMutationQueue(
+    profile,
+    logContext,
+  )
+  const {_} = useLingui()
+
+  const onPressStan = async () => {
+    try {
+      await queueStan()
+      onStan?.()
+    } catch (e: any) {
+      if (e?.name !== 'AbortError') {
+        Toast.show(_(msg`An issue occurred, please try again.`), 'xmark')
+      }
+    }
+  }
+
+  const onPressUnstan = async () => {
+    try {
+      await queueUnstan()
+    } catch (e: any) {
+      if (e?.name !== 'AbortError') {
+        Toast.show(_(msg`An issue occurred, please try again.`), 'xmark')
+      }
+    }
+  }
+
+  if (!profile.viewer) {
+    return <View />
+  }
+
+  if (profile.viewer.following) {
+    return (
+      <Button
+        type={stannedType}
+        labelStyle={labelStyle}
+        onPress={onPressUnstan}
+        label={_(msg({message: 'Unstan', context: 'action'}))}
+      />
+    )
+  } else if (!profile.viewer.followedBy) {
+    return (
+      <Button
+        type={unstannedType}
+        labelStyle={labelStyle}
+        onPress={onPressStan}
+        label={_(msg({message: 'Stan', context: 'action'}))}
+      />
+    )
+  } else {
+    return (
+      <Button
+        type={unstannedType}
+        labelStyle={labelStyle}
+        onPress={onPressStan}
+        label={_(msg({message: 'Stan Back', context: 'action'}))}
+      />
+    )
+  }
+}

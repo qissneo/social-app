@@ -604,8 +604,10 @@ function ReplyToLabel({
 
 const styles = StyleSheet.create({
   outer: {
-    paddingLeft: 10,
-    paddingRight: 15,
+    width: '100%',
+    paddingLeft: 0,
+    paddingRight: 0,
+    borderWidth: 0,
     // @ts-ignore web only -prf
     cursor: 'pointer',
   },
@@ -624,6 +626,8 @@ const styles = StyleSheet.create({
   layout: {
     flexDirection: 'row',
     marginTop: 1,
+    width: '100%',
+    paddingHorizontal: 15, // Move padding to inner layout
   },
   layoutAvi: {
     paddingLeft: 8,
@@ -635,6 +639,7 @@ const styles = StyleSheet.create({
     position: 'relative',
     flex: 1,
     zIndex: 0,
+    width: '100%',
   },
   alert: {
     marginTop: 6,
@@ -646,6 +651,7 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     paddingBottom: 2,
     overflow: 'hidden',
+    width: '100%',
   },
   contentHiderChild: {
     marginTop: 6,

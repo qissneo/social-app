@@ -739,9 +739,13 @@ let PostFeed = ({
         onRefresh={onRefresh}
         headerOffset={headerOffset}
         progressViewOffset={progressViewOffset}
-        contentContainerStyle={{
-          minHeight: Dimensions.get('window').height * 1.5,
-        }}
+        contentContainerStyle={[
+          {
+            minHeight: Dimensions.get('window').height * 1.5,
+          },
+          styles.fullWidthPost,
+        ]}
+        style={styles.fullWidthPost}
         onScrolledDownChange={onScrolledDownChange}
         onEndReached={onEndReached}
         onEndReachedThreshold={2} // number of posts left to trigger load more
@@ -764,7 +768,16 @@ PostFeed = memo(PostFeed)
 export {PostFeed}
 
 const styles = StyleSheet.create({
-  feedFooter: {paddingTop: 20},
+  feedFooter: {
+    paddingTop: 20
+  },
+  fullWidthPost: {
+    width: '100%',
+    marginHorizontal: 0,
+    paddingHorizontal: 0,
+    borderRadius: 0,
+    borderWidth: 0
+  }
 })
 
 export function isThreadParentAt<T>(arr: Array<T>, i: number) {

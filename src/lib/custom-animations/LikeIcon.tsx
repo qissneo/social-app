@@ -130,3 +130,9 @@ export function AnimatedLikeIcon({
     </View>
   )
 }
+
+export const s = {
+  likeColor: {
+    color: t.palette.negative_500, // Using the theme's red color
+  },
+}

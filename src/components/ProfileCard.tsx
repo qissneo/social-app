@@ -223,7 +223,8 @@ export function Name({
 
 export function Handle({profile}: {profile: bsky.profile.AnyProfileView}) {
   const t = useTheme()
-  const handle = sanitizeHandle(profile.handle, '@')
+  // Strip .bsky.social from handle
+  const handle = sanitizeHandle(profile.handle, '@').replace('.bsky.social', '')
 
   return (
     <Text
@@ -482,4 +483,9 @@ export function Labels({
       ))}
     </Pills.Row>
   )
+}
+
+export function sanitizeHandle(handle: string, prefix = ''): string {
+  // Remove .bsky.social suffix and add optional prefix
+  return `${prefix}${handle.replace('.bsky.social', '')}`
 }
